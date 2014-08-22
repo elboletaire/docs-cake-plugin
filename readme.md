@@ -7,6 +7,14 @@ available to the final client directly from the app.
 
 And everything only writing markdown files!
 
+## Installation
+
+As a git submodule:
+
+```bash
+git submodule add https://github.com/elboletaire/docs-cake-plugin.git app/plugins/docs
+```
+
 ## Kick-starting the plugin
 
 You only need to define the docs path constant (`DOCS_PATH`) in order to use
@@ -44,6 +52,12 @@ Router::connect('/admin/docs/*', array(
 	'admin'      => true
 ));
 ```
+
+## TODO
+
+- Version for CakePHP 2.X/3.X
+- Add non-API renderer (and set it as option)
+- More templates
 
 ## License
 
