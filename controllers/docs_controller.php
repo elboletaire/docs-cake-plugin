@@ -198,6 +198,4 @@ class DocsController extends DocsAppController
         $this->set($params);
         return $this->render();
     }
-
-    public function adminSearch() {}
 }
