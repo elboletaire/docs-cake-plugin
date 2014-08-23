@@ -42,7 +42,7 @@ the default cakePHP fallbacks:
 You can access directly `/docs` because the `view()` method has two aliases:
 `index()` and `admin_index()`.
 
-BTW, I recomment you creating your custom route:
+BTW, I recommend you creating your custom route:
 
 ```php
 Router::connect('/admin/docs/*', array(
