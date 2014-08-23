@@ -143,7 +143,7 @@ class DocsController extends DocsAppController
         $cache_key = $this->getCacheKeyForPath($path);
         $mime      = mime_content_type($realpath);
 
-        if ($mime !== 'text/plain') {
+        if (!in_array($mime, array('text/plain', 'text/x-markdown'))) {
             throw new Exception("This is not a markdown file!", 23);
         }
 
@@ -155,9 +155,9 @@ class DocsController extends DocsAppController
 
         if (!$cache || empty($markdown)) {
             if (!$markdown = $this->renderMarkdown($realpath)) {
-                die('error500 tete');
                 $this->cakeError('error500');
             }
+            $markdown = $this->postProcessMarkdown($markdown);
             $this->cacheWrite($path, $filemtime, $markdown);
         }
 
@@ -197,5 +197,20 @@ class DocsController extends DocsAppController
         );
         $this->set($params);
         return $this->render();
+    }
+
+    /**
+     * Does some actions after getting the html result
+     * of a markdown
+     *
+     * @param  string $markdown
+     * @return string
+     */
+    private function postProcessMarkdown($markdown)
+    {
+        // remove `user-content-` from anchor links
+        $markdown = str_replace('user-content-', '', $markdown);
+
+        return $markdown;
     }
 }
