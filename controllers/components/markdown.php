@@ -3,8 +3,9 @@
  * This MarkdownComponent uses the Github Markdown API
  * to return the rendered Markdown in HTML format.
  *
- * @author Òscar Casajuana <elboletaire at underave dot net>
+ * @copyright Òscar Casajuana <elboletaire at underave dot net>
  * @link https://github.com/elboletaire/docs-cake-plugin
+ * @license http://www.apache.org/licenses/LICENSE-2.0.html Apache 2.0
  */
 class MarkdownComponent extends Object
 {
