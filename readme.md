@@ -1,4 +1,4 @@
-# Cake 1.3 Docs plugin
+# Cake 1.3 Docs/Markdown plugin
 
 This CakePHP plugin basically renders markdown files using the github api.
 
@@ -31,7 +31,7 @@ define('DOCS_PATH', '/path/to/your/markdown/files');
 By default this plugin searches for a `readme.md` file. So, if your folder does
 not have that file, it will return an `error404`.
 
-As this file does not have any route defined you'll need to access them using
+As this plugin does not have any route defined you'll need to access them using
 the default cakePHP fallbacks:
 
 - `/docs` should render `DOCS_PATH/readme.md`.
