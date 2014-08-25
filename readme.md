@@ -53,6 +53,81 @@ Router::connect('/admin/docs/*', array(
 ));
 ```
 
+### Custom usage
+
+If you would like just to render markdown files, you can do so using the
+MarkdownComponent given with this plugin.
+
+```php
+// Your Controller or Component
+public $components = array(
+	'Docs.Markdown'
+);
+```
+
+It has many options making it very flexible:
+
+```php
+public $components = array(
+	'Docs.Markdown' => array(
+        'base_path'          => DOCS_PATH,
+        'cache'              => 'default',
+        'layout'             => '/layouts/github',
+        'remove_uc_prefixes' => true,
+        'on_post_process'    => false,
+        'on_pre_process'     => false,
+        'replace_base_url'   => array(
+            'controller' => 'docs',
+            'action'     => 'index',
+            'plugin'     => 'docs'
+        )
+	)
+);
+```
+
+- `base_path`: By defaults points to `DOCS_PATH`. It should be an absolute path,
+  but maybe you can try with relative paths too (relative to `WWW_ROOT`,
+  obviously).
+- `cache`: whether or not to enable the cache. To enable it specify a cache
+  configuration key (by default enabled using default cache).
+- `layout`: the layout to use when rendering markdowns using the `render()`
+  method.
+- `remove_uc_prefixes`: remove `user-content-` prefixes from resulting HTML.
+- `on_pre_process`: callback used before processing the markdown file. It takes
+  one argument: `$markdown` and your callback must return it (modified).
+- `on_post_process`: same as `on_pre_process` but called after the markdown file
+  has been rendered into a HTML file. Here is where `remove_uc_prefixes` take
+  effect.
+- `replace_base_url`: the url path to be prefixed to relative links. Set it to
+  false to not replace relative links.
+
+An example usage could be:
+
+```php
+public $components = array(
+	'Docs.Markdown' => array(
+		// disable some default settings so we get the original github version
+		'replace_base_url'   => false,
+		'remove_uc_prefixes' => false
+	)
+);
+
+public function admin_add()
+{
+	if (!empty($this->data)) {
+		$this->MyModel->set($this->data);
+		if ($this->MyModel->validates()) {
+			// Render a markdown to store it into the DB
+			$this->data['MyModel']['parsed'] = $this->Markdown->renderMarkdown($this->data['MyModel']['markdown']);
+
+			if ($this->MyModel->save($this->data)) {
+				// Whatever
+			}
+		}
+	}
+}
+```
+
 ## TODO
 
 - Version for CakePHP 2.X/3.X
