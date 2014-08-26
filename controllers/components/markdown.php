@@ -59,7 +59,7 @@ class MarkdownComponent extends Object
         $this->controller = $controller;
         $this->path = implode('/', $controller->params['pass']);
 
-        $this->settings = array_merge($this->settings, $settings);
+        $this->initSettings($settings);
     }
 
     /**
@@ -103,9 +103,7 @@ class MarkdownComponent extends Object
      */
     public function initSettings(array $settings)
     {
-        if (!empty($settings)) {
-            $this->settings = array_merge($this->defaults, $settings);
-        }
+        $this->settings = array_merge($this->defaults, $settings);
     }
 
     /**
