@@ -13,7 +13,7 @@ class MarkdownComponent extends Object
  * Mime types for markdown files
  * @var array
  */
-    public static $mimes = array(
+    public $mimes = array(
         'text/plain',
         'text/html',
         'text/x-markdown'
@@ -168,7 +168,7 @@ class MarkdownComponent extends Object
         $cache_key = $this->getCacheKeyForPath($markdown_path);
         $mime      = mime_content_type($realpath);
 
-        if (!in_array($mime, self::$mimes)) {
+        if (!in_array($mime, $this->mimes)) {
             throw new Exception("This is not a markdown file!", 23);
         }
 
