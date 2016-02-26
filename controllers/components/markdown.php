@@ -55,7 +55,9 @@ class MarkdownComponent extends Object
             'controller' => 'docs',
             'action'     => 'index',
             'plugin'     => 'docs'
-        )
+        ),
+        // the default index file
+        'index_file'         => 'readme.md'
     );
 
     private $settings = array();
@@ -112,7 +114,11 @@ class MarkdownComponent extends Object
      */
     public function initSettings(array $settings)
     {
-        $this->settings = array_merge($this->defaults, $settings);
+        if (empty($this->settings)) {
+            $this->settings = array_merge($this->defaults, $settings);
+        } else {
+            $this->settings = array_merge($this->settings, $settings);
+        }
     }
 
     /**
@@ -155,7 +161,7 @@ class MarkdownComponent extends Object
     public function readMarkdown($markdown_path)
     {
         if (empty($markdown_path)) {
-            $markdown_path = 'readme.md';
+            $markdown_path = $this->settings['index_file'];
         }
 
         $realpath = realpath($this->settings['base_path'] . $markdown_path);
